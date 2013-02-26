@@ -1,0 +1,20 @@
+//
+// Prefix header for all source files of the 'LTUpdate Demo' target in the 'LTUpdate Demo' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+
+#if (defined __IPHONE_OS_VERSION_MIN_REQUIRED && \
+__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0)
+#import "JSONKit.h"
+#endif
+
+#endif
