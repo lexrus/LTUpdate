@@ -22,20 +22,15 @@ It's compatible with both ARC and MRC. But MRC mode is not well tested yet.
 ## Usage
 
 ### DnD or pod install
-Download the zip file and unzip it. Drag & drop LTUpdate/LTUpdate folder to your project.
+- Download the zip file and unzip it. Drag & drop LTUpdate/LTUpdate folder to your project.
+Or install with [CocoaPods](https://github.com/CocoaPods/CocoaPods): ```pod 'LTUpdate', '~>0.0.1'```
 
-Or install with [CocoaPods](https://github.com/CocoaPods/CocoaPods):
-```pod 'LTUpdate', '~>0.0.1'```
-
-Add a NSNumber field to {{YourAppName}}-Info.plist with key “APP_STORE_ID” and your App ID as value:
+- Add a NSNumber field to {{YourAppName}}-Info.plist with key “APP_STORE_ID” and your App ID as value:
 ![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_APP_STORE_ID.png)
 
-After that, add ```#import "LTUpdate.h"``` to AppDelegate.m.
+- After that, add ```#import "LTUpdate.h"``` to AppDelegate.m.
 
-Invoke the update method in applicationDidBecomeActive:
-
-```[[LTUpdate shared] update];```
-
+- Invoke the update method in applicationDidBecomeActive: ```[[LTUpdate shared] update];```
 LTUpdate will check new verison from iTunes API. And prompt the user to update if there is a new version available.
 
 ### Customize
@@ -83,6 +78,8 @@ A customized example shows you how to replace the alert view with other open sou
 * ```NSString *humanReadableFileSize(unsigned long long int size);``` formats file size to "123.45MB" style;
 * ```static NSString *kAppName();``` is the display name of current App;
 * ```static NSString *kAppVersion();``` the version of current App.
+
+Learn more in [LTUpdate.h](https://github.com/lexrus/LTUpdate/blob/master/LTUpdate/LTUpdate.h).
 
 
 ## AppStore Submissions
