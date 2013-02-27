@@ -1,5 +1,6 @@
 # LTUpdate
 LeT's Update to the new version available in the AppStore!
+![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_Multilingual.jpg)
 
 ## Features
 * Customizable callback. You can prompt the new version with your favorite view class.
@@ -87,6 +88,7 @@ alertView.bodyFont = [UIFont systemFontOfSize:11];
 * ```NSString *humanReadableFileSize(unsigned long long int size);``` formats file size to "123.45MB" style;
 * ```static NSString *kAppName();``` is the display name of current App;
 * ```static NSString *kAppVersion();``` the version of current App.
+* ```static NSString *LTI18N(NSString *key);``` return localized string in LTUpdate.strings.
 
 Learn more in [LTUpdate.h](https://github.com/lexrus/LTUpdate/blob/master/LTUpdate/LTUpdate.h).
 
