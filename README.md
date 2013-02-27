@@ -2,14 +2,14 @@
 LeT's Update to the new version available in the AppStore!
 
 ## Features
-* ARC/MRC compatible
-* Block based interface
-* GCD
-* Update period control
+* Customizable callback. You can prompt the new version with your favorite view class.
+* Multilingual. 25 languages included in version 0.0.1.
+* Update period control. Daily/Weekly/Monthly
 * “Skip This Version”
-* Multilingual
 * Version details (release date, file size in bytes, release notes...)
-* Customizable alert view
+* ARC/MRC compatible
+* Block based interfaces
+* GCD
 
 ## Requirements
 LTUpdate requires iOS 4.3 or newer.
@@ -65,9 +65,18 @@ In this release Pages for iOS is updated for improved compatibility with Microso
 Pages 1.7.1 resolves issues related to Accessibility settings.
 ```
 
-A customized example shows you how to replace the alert view with other open source alternatives.
+A customized example shows you how to replace the alert view with other open source alternatives(MBAlertView for example):
 
-<!--example placeholder-->
+```
+NSString *text = [NSString stringWithFormat:@"%@\n\n%@", LTI18N(@"A new version is available!"), versionDetails.releaseNotes];
+MBAlertView *alertView = [MBAlertView alertWithBody:text
+    cancelTitle:LTI18N(@"Remind Me Later") cancelBlock:nil];
+[alertView addButtonWithText:LTI18N(@"Update") type:MBAlertViewItemTypeDefault block:^{
+    [[LTUpdate shared] openAppStore];
+}];
+alertView.bodyFont = [UIFont systemFontOfSize:11];
+[alertView addToDisplayQueue];
+```
 
 ### Clear SkippedVersion in UserDefaults
 

@@ -48,11 +48,6 @@ static dispatch_queue_t get_update_queue() {
     return _updateQueue;
 };
 
-NSString *LTI18N(NSString *key) {
-    NSString *localizedString = NSLocalizedStringFromTable(key, @"LTUpdate", nil);
-    return localizedString ? localizedString : @"";
-}
-
 id LTJSONDecode(NSData *data, NSError **error) {
     id JSON = nil;
 

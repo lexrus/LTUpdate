@@ -89,6 +89,11 @@ static NSString *humanReadableFileSize(unsigned long long int size) {
     return [NSString stringWithFormat:@"%.2f%@", working, sizeTypeW];
 }
 
+static NSString *LTI18N(NSString *key) {
+    NSString *localizedString = NSLocalizedStringFromTable(key, @"LTUpdate", nil);
+    return localizedString ? localizedString : @"";
+}
+
 
 @interface LTUpdateVersionDetails : NSObject
 

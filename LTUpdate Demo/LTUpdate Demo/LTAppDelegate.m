@@ -8,6 +8,7 @@
 
 #import "LTAppDelegate.h"
 #import "LTUpdate.h"
+//#import "MBAlertView.h"
 
 @implementation LTAppDelegate
 
@@ -20,6 +21,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    UIViewController *rootViewController = [[UIViewController alloc] init];
+    rootViewController.view.backgroundColor = [UIColor colorWithWhite:0.298 alpha:1.000];
+    self.window.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -38,6 +42,22 @@
                          } else {
                              NSLog(@"You App is up to date.");
                          }
+                         
+                         // If you'd like to use MBAlertView.
+                         
+//                         if (isNewVersionAvailable) {
+//                             NSString *text = [NSString stringWithFormat:@"%@\n\n%@", LTI18N(@"A new version is available!"), versionDetails.releaseNotes];
+//                             MBAlertView *alertView = [MBAlertView alertWithBody:text
+//                                            cancelTitle:LTI18N(@"Remind Me Later") cancelBlock:nil];
+//                             [alertView addButtonWithText:LTI18N(@"Update") type:MBAlertViewItemTypeDefault block:^{
+//                                 [[LTUpdate shared] openAppStore];
+//                             }];
+//                             alertView.bodyFont = [UIFont systemFontOfSize:11];
+//                             [alertView addToDisplayQueue];
+//                         } else {
+//                             NSLog(@"You App is up to date.");
+//                         }
+
 
                      }];
 }
