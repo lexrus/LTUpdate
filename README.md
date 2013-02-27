@@ -27,6 +27,9 @@ Download the zip file and unzip it. Drag & drop LTUpdate/LTUpdate folder to your
 Or install with [CocoaPods](https://github.com/CocoaPods/CocoaPods):
 ```pod 'LTUpdate', '~>0.0.1'```
 
+Add a NSNumber field to {{YourAppName}}-Info.plist with key “APP_STORE_ID” and the ID as value:
+![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_APP_STORE_ID.png)
+
 After that, add ```#import "LTUpdate.h"``` to AppDelegate.m.
 
 Invoke the update method in applicationDidBecomeActive:
