@@ -31,9 +31,9 @@
                      complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
 
                          if (isNewVersionAvailable) {
-                             NSLog(@"New version available.");
-                             NSLog(@"Version %@ published on %@.", versionDetails.version, versionDetails.releaseDate);
+                             NSLog(@"New version %@ released on %@.", versionDetails.version, versionDetails.releaseDate);
                              NSLog(@"The app is about %@", humanReadableFileSize(versionDetails.fileSizeBytes));
+                             NSLog(@"Release notes:\n%@", versionDetails.releaseNotes);
                              [[LTUpdate shared] alertLatestVersion:LTUpdateOption | LTUpdateSkip];
                          } else {
                              NSLog(@"You App is up to date.");
