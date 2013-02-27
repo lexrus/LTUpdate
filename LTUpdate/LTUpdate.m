@@ -38,37 +38,35 @@ static int kDailyDuration = 86400;
 static int kWeeklyDuration = 604800;
 static int kMonthlyDuration = 2592000;
 
-static dispatch_queue_t get_update_queue()
-{
-	static dispatch_once_t updateQueueToken;
-	static dispatch_queue_t _updateQueue;
-    
-	dispatch_once(&updateQueueToken, ^{
-        _updateQueue = dispatch_queue_create ("com.lextang.update", NULL);
+static dispatch_queue_t get_update_queue() {
+    static dispatch_once_t updateQueueToken;
+    static dispatch_queue_t _updateQueue;
+
+    dispatch_once(&updateQueueToken, ^{
+        _updateQueue = dispatch_queue_create("com.lextang.update", NULL);
     });
-	return _updateQueue;
+    return _updateQueue;
 };
 
-id LTJSONDecode(NSData *data, NSError **error)
-{
+id LTJSONDecode(NSData *data, NSError **error) {
     id JSON = nil;
-    
+
     id _targetClass = data;
     SEL _targetSelector = NSSelectorFromString(@"objectFromJSONDataWithParseOptions:error");
     BOOL hasJSONKit = YES;
-    
+
     if (!(_targetSelector && [data respondsToSelector:_targetSelector])) {
         _targetSelector = NSSelectorFromString(@"JSONObjectWithData:options:error:");
         _targetClass = NSClassFromString(@"NSJSONSerialization");
         hasJSONKit = NO;
         if (!_targetClass) return nil;
     }
-    
+
     NSInvocation *invocation = [NSInvocation
-                                invocationWithMethodSignature:[_targetClass methodSignatureForSelector:_targetSelector]];
+            invocationWithMethodSignature:[_targetClass methodSignatureForSelector:_targetSelector]];
     invocation.target = _targetClass;
     invocation.selector = _targetSelector;
-    
+
     if (!hasJSONKit)
         [invocation setArgument:&data atIndex:2];
     NSUInteger optionFlags = 0;
@@ -76,24 +74,27 @@ id LTJSONDecode(NSData *data, NSError **error)
     if (error != NULL) {
         [invocation setArgument:&error atIndex:hasJSONKit ? 3 : 4];
     }
-    
+
     [invocation invoke];
     [invocation getReturnValue:&JSON];
     return JSON;
 }
 
-NSDate *parseRFC3339Date(NSString *dateString)
-{
+NSDate *parseRFC3339Date(NSString *dateString) {
     NSDateFormatter *rfc3339TimestampFormatterWithTimeZone = [[NSDateFormatter alloc] init];
-    [rfc3339TimestampFormatterWithTimeZone setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease]];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [rfc3339TimestampFormatterWithTimeZone setLocale:locale];
     [rfc3339TimestampFormatterWithTimeZone setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-    
+
     NSDate *theDate = nil;
     NSError *error = nil;
     if (![rfc3339TimestampFormatterWithTimeZone getObjectValue:&theDate forString:dateString range:nil error:&error]) {
     }
-    
+
+    [locale release];
+    locale = nil;
     [rfc3339TimestampFormatterWithTimeZone release];
+    rfc3339TimestampFormatterWithTimeZone = nil;
     return theDate;
 }
 
@@ -102,13 +103,12 @@ NSDate *parseRFC3339Date(NSString *dateString)
 @end
 
 
-@interface LTUpdate()<UIAlertViewDelegate>
+@interface LTUpdate () <UIAlertViewDelegate>
 
 @end
 
 
-@implementation LTUpdate
-{
+@implementation LTUpdate {
     __unsafe_unretained LTUpdateCallback _completionBlock;
 }
 
@@ -117,8 +117,7 @@ NSDate *parseRFC3339Date(NSString *dateString)
 
 static long _appStoreID;
 
-+ (id)shared
-{
++ (id)shared {
     static LTUpdate *instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -132,47 +131,44 @@ static long _appStoreID;
     return _appStoreID;
 }
 
-- (void)checkVersion
-{
-    [self checkVersion:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
-        [self alertLatestVersion:LTUpdateOption|LTUpdateSkip];
+- (void)update {
+    [self update:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
+        [self alertLatestVersion:LTUpdateOption | LTUpdateSkip];
     }];
 }
 
-- (void)checkVersion:(LTUpdateCallback)callback
-{
+- (void)update:(LTUpdateCallback)callback {
     [self checkVersionByPeroid:LTUpdateDaily complete:callback];
 }
 
-- (void)checkVersionByPeroid:(LTUpdatePeroid)peroid complete:(LTUpdateCallback)callback
-{
+- (void)update:(LTUpdatePeroid)peroid complete:(LTUpdateCallback)callback {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-retain-cycles"
     if (callback)
         self.completionBlock = callback;
 #pragma clang diagnostic pop
-    
+
     double lastUpdateInterval = [self lastUpdateInterval];
     double timestamp = [[NSDate date] timeIntervalSince1970];
-    
+
     if ((peroid & LTUpdateDaily && timestamp - lastUpdateInterval < kDailyDuration) ||
-        (peroid & LTUpdateWeekly && timestamp - lastUpdateInterval < kWeeklyDuration) ||
-        (peroid & LTUpdateMonthly && timestamp - lastUpdateInterval < kMonthlyDuration)) {
+            (peroid & LTUpdateWeekly && timestamp - lastUpdateInterval < kWeeklyDuration) ||
+            (peroid & LTUpdateMonthly && timestamp - lastUpdateInterval < kMonthlyDuration)) {
         self.completionBlock(NO, nil);
         return;
     }
-    
-    __weak __typeof(&*self)weakSelf = self;
+
+    __weak __typeof (&*self) weakSelf = self;
     dispatch_async(get_update_queue(), ^{
-        __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+        __strong __typeof (&*weakSelf) strongSelf = weakSelf;
         if (!strongSelf.completionBlock) return;
-        
+
         [strongSelf parseJSON:[strongSelf fetchJSON]];
         if ([strongSelf latestVersion]) {
             if (strongSelf.completionBlock)
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                strongSelf.completionBlock(YES, [strongSelf latestVersion]);
-            });
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    strongSelf.completionBlock(YES, [strongSelf latestVersion]);
+                });
         } else {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 strongSelf.completionBlock(NO, nil);
@@ -183,8 +179,7 @@ static long _appStoreID;
 
 #pragma mark - JSON
 
-- (NSData*)fetchJSON
-{
+- (NSData *)fetchJSON {
     NSString *urlString = [NSString stringWithFormat:kiTunesAPILookUpFormat, [self appStoreID]];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url
@@ -192,7 +187,8 @@ static long _appStoreID;
                                          timeoutInterval:30];
     NSError *error = nil;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:&error];
-    [urlString release]; urlString = nil;
+    [urlString release];
+    urlString = nil;
     if (!error) {
         [self setLastUpdateInterval];
         return responseData;
@@ -200,8 +196,7 @@ static long _appStoreID;
     return nil;
 }
 
-- (void)parseJSON:(NSData *)jsonData
-{
+- (void)parseJSON:(NSData *)jsonData {
     NSError *error = nil;
     id json = LTJSONDecode(jsonData, &error);
     if (!error && [json isKindOfClass:[NSDictionary class]]) {
@@ -214,9 +209,9 @@ static long _appStoreID;
                 NSString *releaseDate = [versionDetail objectForKey:@"releaseDate"];
                 NSString *fileSizeBytes = [versionDetail objectForKey:@"fileSizeBytes"];
                 if (newVersion &&
-                    [newVersion isKindOfClass:[NSString class]] &&
-                    [newVersion compare:kAppVersion() options:NSNumericSearch] == NSOrderedDescending &&
-                    ![self isVersionSkipped:newVersion]) {
+                        [newVersion isKindOfClass:[NSString class]] &&
+                        [newVersion compare:kAppVersion() options:NSNumericSearch] == NSOrderedDescending &&
+                        ![self isVersionSkipped:newVersion]) {
                     _latestVersion = [[LTUpdateVersionDetails alloc] init];
                     _latestVersion.version = [newVersion copy];
                     if (releaseNotes && [releaseNotes length] > 0) {
@@ -238,13 +233,11 @@ static long _appStoreID;
 
 #pragma mark - Update interval
 
-- (double)lastUpdateInterval
-{
+- (double)lastUpdateInterval {
     return [[NSUserDefaults standardUserDefaults] doubleForKey:@"LTLastUpdateDate"];
 }
 
-- (void)setLastUpdateInterval
-{
+- (void)setLastUpdateInterval {
     double timestamp = [[NSDate date] timeIntervalSince1970];
     [[NSUserDefaults standardUserDefaults] setDouble:timestamp forKey:@"LTLastUpdateDate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -252,67 +245,61 @@ static long _appStoreID;
 
 #pragma mark - Skipped version
 
-- (NSString*)versionSkipped
-{
+- (NSString *)versionSkipped {
     return [[NSUserDefaults standardUserDefaults] stringForKey:@"LTSkippedVersion"];
 }
 
-- (void)setVersionSkipped:(NSString*)version
-{
+- (void)setVersionSkipped:(NSString *)version {
     [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"LTSkippedVersion"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (BOOL)isVersionSkipped:(NSString*)version
-{
+- (BOOL)isVersionSkipped:(NSString *)version {
     return [version compare:[self versionSkipped] options:NSNumericSearch] == NSOrderedSame;
 }
 
-- (void)skipVersion:(NSString*)version
-{
+- (void)skipVersion:(NSString *)version {
     [self setVersionSkipped:version];
 }
 
-- (void)clearSkippedVersion
-{
+- (void)clearSkippedVersion {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LTSkippedVersion"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - Default Alert
 
-- (void) __attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions
-{
+- (void)__attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions {
     UIAlertView *alertView = [[UIAlertView alloc] init];
     [alertView setTitle:NSLocalizedString(@"New Version Available", nil)];
     [alertView setMessage:NSLocalizedString(@"Should I open AppStore to update?", nil)];
-    
+
     [alertView addButtonWithTitle:NSLocalizedString(@"Update", nil)];
-    
+
     if (alertOptions & LTUpdateSkip) {
         [alertView addButtonWithTitle:NSLocalizedString(@"Skip this version", nil)];
     }
-    
+
     if (alertOptions & LTUpdateForce) {
         [alertView setMessage:NSLocalizedString(@"Update is required.", nil)];
     } else {
         [alertView setMessage:NSLocalizedString(@"Open AppStore to update?", nil)];
         [alertView addButtonWithTitle:NSLocalizedString(@"Not now", nil)];
     }
-    
+
     [alertView setDelegate:self];
     [alertView show];
-    [alertView release]; alertView = nil;
+    [alertView release];
+    alertView = nil;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         NSString *appStoreURL = [NSString stringWithFormat:kAppStoreFormat, [self appStoreID]];
         NSURL *url = [NSURL URLWithString:appStoreURL];
         [[UIApplication sharedApplication] openURL:url];
     } else if ([[alertView buttonTitleAtIndex:buttonIndex]
-                isEqualToString:NSLocalizedString(@"Skip this version", nil)]) {
+            isEqualToString:NSLocalizedString(@"Skip this version", nil)]) {
         [self skipVersion:[[self latestVersion] version]];
     }
 }

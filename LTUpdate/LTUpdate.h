@@ -71,42 +71,44 @@ static NSString *kAppName() {
 }
 
 static NSString *humanReadableFileSize(unsigned long long int size) {
-	NSString *sizeTypeW = @"bytes";
-	float working = 0;
-    
-	if (size < 1) {
-		return @"0KB";
-	} else {
-		if (size > 1024) {
-			working = size / 1024.;
-			sizeTypeW = @"KB";
-		}
-		if (working > 1024) {
-			working = working / 1024.;
-			sizeTypeW = @"MB";
-		}
-	}
-	return [NSString stringWithFormat:@"%.2f%@", working, sizeTypeW];
+    NSString *sizeTypeW = @"bytes";
+    float working = 0;
+
+    if (size < 1) {
+        return @"0KB";
+    } else {
+        if (size > 1024) {
+            working = size / 1024.;
+            sizeTypeW = @"KB";
+        }
+        if (working > 1024) {
+            working = working / 1024.;
+            sizeTypeW = @"MB";
+        }
+    }
+    return [NSString stringWithFormat:@"%.2f%@", working, sizeTypeW];
 }
 
 
 @interface LTUpdateVersionDetails : NSObject
 
-@property (nonatomic, strong) NSString *version;
-@property (nonatomic, strong) NSString *releaseNotes;
-@property (nonatomic, strong) NSDate *releaseDate;
-@property (nonatomic, assign) long long fileSizeBytes;
+@property(nonatomic, strong) NSString *version;
+@property(nonatomic, strong) NSString *releaseNotes;
+@property(nonatomic, strong) NSDate *releaseDate;
+@property(nonatomic, assign) long long fileSizeBytes;
 
 @end
 
 
-typedef NS_ENUM(uint, LTUpdateOptions) {
+typedef NS_ENUM(uint, LTUpdateOptions)
+{
     LTUpdateOption,
     LTUpdateForce,
     LTUpdateSkip
 };
 
-typedef NS_ENUM(uint, LTUpdatePeroid) {
+typedef NS_ENUM(uint, LTUpdatePeroid)
+{
     LTUpdateDaily,
     LTUpdateWeekly,
     LTUpdateMonthly
@@ -114,25 +116,31 @@ typedef NS_ENUM(uint, LTUpdatePeroid) {
 
 #ifndef LTUpdateBlocks
 #define LTUpdateBlocks
+
 typedef void(^LTUpdateCallback)(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails);
+
 #endif
 
 @interface LTUpdate : NSObject
 
-@property (nonatomic, strong) LTUpdateVersionDetails *latestVersion;
-@property (nonatomic, assign, readonly) long appStoreID;
-@property (nonatomic, assign) LTUpdateCallback completionBlock;
+@property(nonatomic, strong) LTUpdateVersionDetails *latestVersion;
+@property(nonatomic, assign, readonly) long appStoreID;
+@property(nonatomic, assign) LTUpdateCallback completionBlock;
 
 + (id)shared;
 
-- (void) __attribute__((unused)) checkVersion;
-- (void) __attribute__((unused)) checkVersion:(LTUpdateCallback)callback;
-- (void)checkVersionByPeroid:(LTUpdatePeroid)peroid complete:(LTUpdateCallback)callback;
+- (void)__attribute__((unused)) update;
 
-- (BOOL)isVersionSkipped:(NSString*)version;
-- (void)skipVersion:(NSString*)version;
+- (void)__attribute__((unused)) update:(LTUpdateCallback)callback;
+
+- (void)update:(LTUpdatePeroid)peroid complete:(LTUpdateCallback)callback;
+
+- (BOOL)isVersionSkipped:(NSString *)version;
+
+- (void)skipVersion:(NSString *)version;
+
 - (void)clearSkippedVersion;
 
-- (void) __attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions;
+- (void)__attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions;
 
 @end

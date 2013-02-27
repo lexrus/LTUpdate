@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D71AFD5316DDB3340099121A /* LTUpdate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D71AFD5216DDB3340099121A /* LTUpdate.bundle */; };
+		D71AFD5416DDB3340099121A /* LTUpdate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D71AFD5216DDB3340099121A /* LTUpdate.bundle */; };
 		D779146116D23BB600BDF086 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D779146016D23BB600BDF086 /* UIKit.framework */; };
 		D779146316D23BB600BDF086 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D779146216D23BB600BDF086 /* Foundation.framework */; };
 		D779146516D23BB600BDF086 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D779146416D23BB600BDF086 /* CoreGraphics.framework */; };
@@ -38,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D71AFD5216DDB3340099121A /* LTUpdate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LTUpdate.bundle; sourceTree = "<group>"; };
 		D779145D16D23BB600BDF086 /* LTUpdate Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTUpdate Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D779146016D23BB600BDF086 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D779146216D23BB600BDF086 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -165,6 +168,7 @@
 		D779149516D23C1700BDF086 /* LTUpdate */ = {
 			isa = PBXGroup;
 			children = (
+				D71AFD5216DDB3340099121A /* LTUpdate.bundle */,
 				D779149616D23C3100BDF086 /* LTUpdate.h */,
 				D779149716D23C3100BDF086 /* LTUpdate.m */,
 			);
@@ -258,6 +262,7 @@
 				D779147316D23BB700BDF086 /* Default.png in Resources */,
 				D779147516D23BB700BDF086 /* Default@2x.png in Resources */,
 				D779147716D23BB700BDF086 /* Default-568h@2x.png in Resources */,
+				D71AFD5316DDB3340099121A /* LTUpdate.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D779148916D23BB700BDF086 /* InfoPlist.strings in Resources */,
+				D71AFD5416DDB3340099121A /* LTUpdate.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

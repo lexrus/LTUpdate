@@ -27,19 +27,19 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 //    [[LTUpdate shared] clearSkippedVersion];
-    [[LTUpdate shared] checkVersionByPeroid:LTUpdateDaily
-                                   complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
-                                       
-                                       if (isNewVersionAvailable) {
-                                           NSLog(@"New version available.");
-                                           NSLog(@"Version %@ published on %@.", versionDetails.version, versionDetails.releaseDate);
-                                           NSLog(@"The app is about %@", humanReadableFileSize(versionDetails.fileSizeBytes));
-                                           [[LTUpdate shared] alertLatestVersion:LTUpdateOption|LTUpdateSkip];
-                                       } else {
-                                           NSLog(@"You App is up to date.");
-                                       }
-                                       
-                                   }];
+    [[LTUpdate shared] update:LTUpdateDaily
+                     complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
+
+                         if (isNewVersionAvailable) {
+                             NSLog(@"New version available.");
+                             NSLog(@"Version %@ published on %@.", versionDetails.version, versionDetails.releaseDate);
+                             NSLog(@"The app is about %@", humanReadableFileSize(versionDetails.fileSizeBytes));
+                             [[LTUpdate shared] alertLatestVersion:LTUpdateOption | LTUpdateSkip];
+                         } else {
+                             NSLog(@"You App is up to date.");
+                         }
+
+                     }];
 }
 
 @end
