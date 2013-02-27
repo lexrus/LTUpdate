@@ -62,9 +62,9 @@
 		D71AFD8E16DDF2170099121A /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LTUpdate.strings; sourceTree = "<group>"; };
 		D71AFD8F16DDF2170099121A /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/LTUpdate.strings; sourceTree = "<group>"; };
 		D71AFD9016DDF2170099121A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LTUpdate.strings"; sourceTree = "<group>"; };
-		D71AFD9116DDF2170099121A /* zh-Hant-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant-HK"; path = "zh-Hant-HK.lproj/LTUpdate.strings"; sourceTree = "<group>"; };
 		D71AFD9216DDF2170099121A /* zh-Hant-TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant-TW"; path = "zh-Hant-TW.lproj/LTUpdate.strings"; sourceTree = "<group>"; };
 		D71AFD9516DE01A20099121A /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/LTUpdate.strings; sourceTree = "<group>"; };
+		D73EFAD016DE475E008C2CD8 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LTUpdate.strings"; sourceTree = "<group>"; };
 		D779145D16D23BB600BDF086 /* LTUpdate Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTUpdate Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D779146016D23BB600BDF086 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D779146216D23BB600BDF086 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -409,9 +409,9 @@
 				D71AFD8E16DDF2170099121A /* tr */,
 				D71AFD8F16DDF2170099121A /* uk */,
 				D71AFD9016DDF2170099121A /* zh-Hans */,
-				D71AFD9116DDF2170099121A /* zh-Hant-HK */,
 				D71AFD9216DDF2170099121A /* zh-Hant-TW */,
 				D71AFD9516DE01A20099121A /* sl */,
+				D73EFAD016DE475E008C2CD8 /* zh-Hant */,
 			);
 			name = LTUpdate.strings;
 			sourceTree = "<group>";
