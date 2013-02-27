@@ -307,4 +307,14 @@ static long _appStoreID;
     }
 }
 
+#pragma mark - Open AppStore
+
+- (void)openAppStore
+{
+    NSString *appStoreURL = [NSString stringWithFormat:kAppStoreFormat, [self appStoreID]];
+    NSURL *url = [NSURL URLWithString:appStoreURL];
+    [[UIApplication sharedApplication] openURL:url];
+}
+
+
 @end

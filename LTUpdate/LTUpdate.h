@@ -143,4 +143,6 @@ typedef void(^LTUpdateCallback)(BOOL isNewVersionAvailable, LTUpdateVersionDetai
 
 - (void)__attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions;
 
+- (void)openAppStore;
+
 @end
