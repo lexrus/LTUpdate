@@ -1,6 +1,6 @@
 "A new version is available!" = "새 버전을 사용할 수 있습니다!";
 
-"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%$1@ %$2@ 사용할 수 있습니다. 당신은 %$3@ 수 있습니다. 당신은 지금 (@$4%)를 다운로드 하시겠습니까?";
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ 사용할 수 있습니다. 당신은 %3$@ 수 있습니다. 당신은 지금 (@4$%)를 다운로드 하시겠습니까?";
 
 "Update" = "새롭게하다";
 
