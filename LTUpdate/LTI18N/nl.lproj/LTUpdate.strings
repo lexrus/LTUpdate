@@ -1,0 +1,11 @@
+"A new version is available!" = "Een nieuwe versie is beschikbaar!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ is nu beschikbaar—u heeft %3$@. Wilt u het nu downloaden(%4$@)?";
+
+"Update" = "Update";
+
+"Skip This Version" = "Sla deze versie over";
+
+"Remind Me Later" = "Herinner mij er later aan";
+
+"Release Notes" = "Versiegegevens";

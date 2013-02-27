@@ -1,0 +1,11 @@
+"A new version is available!" = "Na voljo je nova verzija programa!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "Na voljo je %1$@ %2$@ — vi imate %3$@. Ga želite prenesti s spleta sedaj(%4$@)?";
+
+"Update" = "Posodabljanje";
+
+"Skip This Version" = "Preskoči to verzijo";
+
+"Remind Me Later" = "Spomni me kasneje";
+
+"Release Notes" = "Opombe ob izdaji";

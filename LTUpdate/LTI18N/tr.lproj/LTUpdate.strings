@@ -1,0 +1,11 @@
+"A new version is available!" = "Uygulamasının yeni bir sürümü yüklemeye hazır!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ çıktı (Kullandığınız Sürüm: %3$@). Şimdi yeni sürümü indirmek(%4$@) ister misiniz?";
+
+"Update" = "Güncellemeyi";
+
+"Skip This Version" = "Bu sürümü geç";
+
+"Remind Me Later" = "Tekrar Hatırlat";
+
+"Release Notes" = "Sürüm Hakkında";

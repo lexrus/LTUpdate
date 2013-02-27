@@ -1,0 +1,11 @@
+"A new version is available!" = "En ny version er tilgængelig!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ er nu tilgængelig - du har %3$@. Vil du hente den nu(%4$@)?";
+
+"Update" = "Opdatering";
+
+"Skip This Version" = "Skip denne version";
+
+"Remind Me Later" = "Påmind mig senere";
+
+"Release Notes" = "Udgivelsesnoter";

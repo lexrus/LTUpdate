@@ -1,0 +1,11 @@
+"A new version is available!" = "เวอร์ชั่นใหม่ของพร้อมสำหรับการติดตั้งแล้ว";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ พร้อมให้ดาวน์โหลดแล้ว (คุณมีเวอร์ชั่น %3$@) ดาวน์โหลด(%4$@)หรือไม่";
+
+"Update" = "อัพเดท";
+
+"Skip This Version" = "ข้ามเวอร์ชั่นนี้";
+
+"Remind Me Later" = "เตือนในภายหลัง";
+
+"Release Notes" = "หมายเหตุการเผยแพร่";

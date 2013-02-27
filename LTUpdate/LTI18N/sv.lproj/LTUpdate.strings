@@ -1,0 +1,11 @@
+"A new version is available!" = "En ny version finns tillgänglig!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ är nu tillgänglig—du har %3$@. Vill du ladda(%4$@) ned nu?";
+
+"Update" = "Uppdate";
+
+"Skip This Version" = "Hoppa över denna version";
+
+"Remind Me Later" = "Påminn mig senare";
+
+"Release Notes" = "Versionsinformation";

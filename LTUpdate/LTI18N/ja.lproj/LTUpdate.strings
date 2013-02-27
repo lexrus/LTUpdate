@@ -1,0 +1,11 @@
+"A new version is available!" = "新しいバージョンが入手できます!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ が入手できます（使用中のバージョンは %3$@ です）。今すぐダウンロードしますか(%4$@)?";
+
+"Update" = "アップデート";
+
+"Skip This Version" = "このバージョンはスキップ";
+
+"Remind Me Later" = "後で通知";
+
+"Release Notes" = "リリースノート";

@@ -1,0 +1,11 @@
+"A new version is available!" = "¡Hay una nueva versión!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ está disponible (usted tiene la %3$@). ¿Desea descargarla ahora(%4$@)?";
+
+"Update" = "Instalar";
+
+"Skip This Version" = "No instalar esta versión";
+
+"Remind Me Later" = "Recordármelo";
+
+"Release Notes" = "Notas de la versión";

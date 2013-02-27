@@ -1,0 +1,11 @@
+"A new version is available!" = "Nová verzia je k dispozícii!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ je teraz k dispozícii. Máte %3$@. Chceli by ste na stiahnutie (%4$@) to teraz?";
+
+"Update" = "Update";
+
+"Skip This Version" = "Vynechať túto verziu";
+
+"Remind Me Later" = "Pripomenúť neskôr";
+
+"Release Notes" = "Poznámky k vydaniu";

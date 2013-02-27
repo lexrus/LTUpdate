@@ -1,0 +1,11 @@
+"A new version is available!" = "يتوفر إصدار جديد من تطبيق!";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ متوفر الآن. لديك %3$@. ترغب تحميل (%4@) الآن؟";
+
+"Update" = "Update";
+
+"Skip This Version" = "تخطي هذا الإصدار";
+
+"Remind Me Later" = "تذكيري لاحقًا";
+
+"Release Notes" = "معلومات عن الإصدار:";

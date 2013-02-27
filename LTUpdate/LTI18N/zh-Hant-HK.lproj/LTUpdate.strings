@@ -1,0 +1,11 @@
+"A new version is available!" = "新的版本已經提供下載了！";
+
+"%@ %@ is now available. You have %@. Would you like to download(%@) it now?" = "%1$@ %2$@ 已經提供下載。您現在的版本是 %3$@。您要現在下載(%4$@)它嗎？";
+
+"Update" = "更新";
+
+"Skip This Version" = "跳過這個版本";
+
+"Remind Me Later" = "以後再提醒我";
+
+"Release Notes" = "更新信息";

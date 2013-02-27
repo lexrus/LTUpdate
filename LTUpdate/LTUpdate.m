@@ -48,6 +48,11 @@ static dispatch_queue_t get_update_queue() {
     return _updateQueue;
 };
 
+NSString *LTI18N(NSString *key) {
+    NSString *localizedString = NSLocalizedStringFromTable(key, @"LTUpdate", nil);
+    return localizedString ? localizedString : @"";
+}
+
 id LTJSONDecode(NSData *data, NSError **error) {
     id JSON = nil;
 
@@ -138,7 +143,7 @@ static long _appStoreID;
 }
 
 - (void)update:(LTUpdateCallback)callback {
-    [self checkVersionByPeroid:LTUpdateDaily complete:callback];
+    [self update:LTUpdateDaily complete:callback];
 }
 
 - (void)update:(LTUpdatePeroid)peroid complete:(LTUpdateCallback)callback {
@@ -271,20 +276,18 @@ static long _appStoreID;
 
 - (void)__attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions {
     UIAlertView *alertView = [[UIAlertView alloc] init];
-    [alertView setTitle:NSLocalizedString(@"New Version Available", nil)];
-    [alertView setMessage:NSLocalizedString(@"Should I open AppStore to update?", nil)];
+    [alertView setTitle:LTI18N(@"A new version is available!")];
+    [alertView setMessage:[NSString stringWithFormat:LTI18N(@"%@ %@ is now available. You have %@. Would you like to download(%@) it now?"), kAppName(), self.latestVersion.version, kAppVersion(), humanReadableFileSize(self.latestVersion.fileSizeBytes)]];
 
-    [alertView addButtonWithTitle:NSLocalizedString(@"Update", nil)];
-
-    if (alertOptions & LTUpdateSkip) {
-        [alertView addButtonWithTitle:NSLocalizedString(@"Skip this version", nil)];
-    }
+    [alertView addButtonWithTitle:LTI18N(@"Update")];
 
     if (alertOptions & LTUpdateForce) {
-        [alertView setMessage:NSLocalizedString(@"Update is required.", nil)];
+        
     } else {
-        [alertView setMessage:NSLocalizedString(@"Open AppStore to update?", nil)];
-        [alertView addButtonWithTitle:NSLocalizedString(@"Not now", nil)];
+        if (alertOptions & LTUpdateSkip) {
+            [alertView addButtonWithTitle:LTI18N(@"Skip This Version")];
+        }
+        [alertView addButtonWithTitle:LTI18N(@"Remind Me Later")];
     }
 
     [alertView setDelegate:self];
@@ -299,7 +302,7 @@ static long _appStoreID;
         NSURL *url = [NSURL URLWithString:appStoreURL];
         [[UIApplication sharedApplication] openURL:url];
     } else if ([[alertView buttonTitleAtIndex:buttonIndex]
-            isEqualToString:NSLocalizedString(@"Skip this version", nil)]) {
+            isEqualToString:LTI18N(@"Skip This Version")]) {
         [self skipVersion:[[self latestVersion] version]];
     }
 }
