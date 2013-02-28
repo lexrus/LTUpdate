@@ -109,7 +109,9 @@ static long _appStoreID;
 
 - (void)update {
     [self update:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
-        [self alertLatestVersion:LTUpdateOption | LTUpdateSkip];
+        if (isNewVersionAvailable) {
+            [self alertLatestVersion:LTUpdateOption | LTUpdateSkip];
+        }
     }];
 }
 
