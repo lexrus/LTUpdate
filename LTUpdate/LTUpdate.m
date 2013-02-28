@@ -120,6 +120,8 @@ static long _appStoreID;
 }
 
 - (void)update:(LTUpdatePeroid)peroid complete:(LTUpdateCallback)callback {
+    NSAssert(self.appStoreID > 0,
+             @"Please add a Number field in {{}}-Info.plist named APP_STORE_ID and your App ID as value.");
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-retain-cycles"
     if (callback)
