@@ -34,6 +34,7 @@
 // @define kiTunesLookUpFormat @"http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/wa/wsLookup?id=%ld"
 
 
+static int kHourlyDuration = 3600;
 static int kDailyDuration = 86400;
 static int kWeeklyDuration = 604800;
 static int kMonthlyDuration = 2592000;
@@ -131,9 +132,10 @@ static long _appStoreID;
     double lastUpdateInterval = [self lastUpdateInterval];
     double timestamp = [[NSDate date] timeIntervalSince1970];
 
-    if ((peroid & LTUpdateDaily && timestamp - lastUpdateInterval < kDailyDuration) ||
-            (peroid & LTUpdateWeekly && timestamp - lastUpdateInterval < kWeeklyDuration) ||
-            (peroid & LTUpdateMonthly && timestamp - lastUpdateInterval < kMonthlyDuration)) {
+    if ((peroid == LTUpdateHourly && timestamp - lastUpdateInterval < kHourlyDuration) ||
+        (peroid == LTUpdateDaily && timestamp - lastUpdateInterval < kDailyDuration) ||
+        (peroid == LTUpdateWeekly && timestamp - lastUpdateInterval < kWeeklyDuration) ||
+        (peroid == LTUpdateMonthly && timestamp - lastUpdateInterval < kMonthlyDuration)) {
         self.completionBlock(NO, nil);
         return;
     }

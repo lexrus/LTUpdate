@@ -114,6 +114,7 @@ typedef NS_ENUM(uint, LTUpdateOptions)
 
 typedef NS_ENUM(uint, LTUpdatePeroid)
 {
+    LTUpdateHourly,
     LTUpdateDaily,
     LTUpdateWeekly,
     LTUpdateMonthly

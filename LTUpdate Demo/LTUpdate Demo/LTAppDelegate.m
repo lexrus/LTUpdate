@@ -31,7 +31,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 //    [[LTUpdate shared] clearSkippedVersion];
-    [[LTUpdate shared] update:LTUpdateDaily
+    [[LTUpdate shared] update:LTUpdateHourly
                      complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
 
                          if (isNewVersionAvailable) {
