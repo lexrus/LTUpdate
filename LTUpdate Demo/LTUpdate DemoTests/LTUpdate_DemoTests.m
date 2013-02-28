@@ -27,7 +27,7 @@
 
 - (void)testAppStoreID {
     long appStoreID = [[LTUpdate shared] appStoreID];
-    STAssertEquals(appStoreID, 361309726, @"AppStoreID must be fill in <project_name>-Info.plist");
+    STAssertTrue(appStoreID - 361309726 == 0, @"AppStoreID must be fill in <project_name>-Info.plist");
 }
 
 - (void)testVersionSkip {

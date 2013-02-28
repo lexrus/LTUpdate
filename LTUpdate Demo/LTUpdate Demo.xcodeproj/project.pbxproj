@@ -23,8 +23,8 @@
 		D779148116D23BB700BDF086 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D779146216D23BB600BDF086 /* Foundation.framework */; };
 		D779148916D23BB700BDF086 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D779148716D23BB700BDF086 /* InfoPlist.strings */; };
 		D779148C16D23BB700BDF086 /* LTUpdate_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D779148B16D23BB700BDF086 /* LTUpdate_DemoTests.m */; };
-		D779149816D23C3100BDF086 /* LTUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = D779149716D23C3100BDF086 /* LTUpdate.m */; };
-		D779149916D23C3100BDF086 /* LTUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = D779149716D23C3100BDF086 /* LTUpdate.m */; };
+		D779149816D23C3100BDF086 /* LTUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = D779149716D23C3100BDF086 /* LTUpdate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		D779149916D23C3100BDF086 /* LTUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = D779149716D23C3100BDF086 /* LTUpdate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D7953BA716DB410600700B2F /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D7953BA316DB410600700B2F /* JSONKit.m */; };
 		D7953BA816DB410600700B2F /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D7953BA316DB410600700B2F /* JSONKit.m */; };
 /* End PBXBuildFile section */

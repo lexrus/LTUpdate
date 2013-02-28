@@ -48,38 +48,6 @@ static dispatch_queue_t get_update_queue() {
     return _updateQueue;
 };
 
-id LTJSONDecode(NSData *data, NSError **error) {
-    id JSON = nil;
-
-    id _targetClass = data;
-    SEL _targetSelector = NSSelectorFromString(@"objectFromJSONDataWithParseOptions:error");
-    BOOL hasJSONKit = YES;
-
-    if (!(_targetSelector && [data respondsToSelector:_targetSelector])) {
-        _targetSelector = NSSelectorFromString(@"JSONObjectWithData:options:error:");
-        _targetClass = NSClassFromString(@"NSJSONSerialization");
-        hasJSONKit = NO;
-        if (!_targetClass) return nil;
-    }
-
-    NSInvocation *invocation = [NSInvocation
-            invocationWithMethodSignature:[_targetClass methodSignatureForSelector:_targetSelector]];
-    invocation.target = _targetClass;
-    invocation.selector = _targetSelector;
-
-    if (!hasJSONKit)
-        [invocation setArgument:&data atIndex:2];
-    NSUInteger optionFlags = 0;
-    [invocation setArgument:&optionFlags atIndex:hasJSONKit ? 2 : 3];
-    if (error != NULL) {
-        [invocation setArgument:&error atIndex:hasJSONKit ? 3 : 4];
-    }
-
-    [invocation invoke];
-    [invocation getReturnValue:&JSON];
-    return JSON;
-}
-
 NSDate *parseRFC3339Date(NSString *dateString) {
     NSDateFormatter *rfc3339TimestampFormatterWithTimeZone = [[NSDateFormatter alloc] init];
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
@@ -100,6 +68,16 @@ NSDate *parseRFC3339Date(NSString *dateString) {
 
 @implementation LTUpdateVersionDetails
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    LTUpdateVersionDetails *copy = [[[self class] allocWithZone:zone] init];
+    copy.version = [[self.version copyWithZone:zone] autorelease];
+    copy.releaseNotes = [[self.releaseNotes copyWithZone:zone] autorelease];
+    copy.releaseDate = [[self.releaseDate copyWithZone:zone] autorelease];
+    copy.fileSizeBytes = self.fileSizeBytes;
+    return copy;
+}
+
 @end
 
 
@@ -108,9 +86,7 @@ NSDate *parseRFC3339Date(NSString *dateString) {
 @end
 
 
-@implementation LTUpdate {
-    __unsafe_unretained LTUpdateCallback _completionBlock;
-}
+@implementation LTUpdate
 
 @synthesize latestVersion = _latestVersion;
 @synthesize completionBlock = _completionBlock;
@@ -165,10 +141,11 @@ static long _appStoreID;
 
         [strongSelf parseJSON:[strongSelf fetchJSON]];
         if ([strongSelf latestVersion]) {
-            if (strongSelf.completionBlock)
+            if (strongSelf.completionBlock) {
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     strongSelf.completionBlock(YES, [strongSelf latestVersion]);
                 });
+            }
         } else {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 strongSelf.completionBlock(NO, nil);
@@ -196,10 +173,40 @@ static long _appStoreID;
     return nil;
 }
 
+- (id)decodeJSON:(NSData *)data {
+    
+    id _targetClass = data;
+    SEL _targetSelector = NSSelectorFromString(@"objectFromJSONDataWithParseOptions:error");
+    BOOL hasJSONKit = YES;
+    
+    if (!(_targetSelector && [data respondsToSelector:_targetSelector])) {
+        _targetSelector = NSSelectorFromString(@"JSONObjectWithData:options:error:");
+        _targetClass = NSClassFromString(@"NSJSONSerialization");
+        hasJSONKit = NO;
+        if (!_targetClass) return nil;
+    }
+    
+    NSInvocation *invocation = [NSInvocation
+                                invocationWithMethodSignature:[_targetClass methodSignatureForSelector:_targetSelector]];
+    invocation.target = _targetClass;
+    invocation.selector = _targetSelector;
+    
+    if (!hasJSONKit)
+        [invocation setArgument:&data atIndex:2];
+    NSUInteger optionFlags = 0;
+    [invocation setArgument:&optionFlags atIndex:hasJSONKit ? 2 : 3];
+//    NSError *error = nil;
+//    [invocation setArgument:&error atIndex:hasJSONKit ? 3 : 4];
+
+    [invocation invoke];
+    __unsafe_unretained id JSON = nil;
+    [invocation getReturnValue:&JSON];
+    return JSON;
+}
+
 - (void)parseJSON:(NSData *)jsonData {
-    NSError *error = nil;
-    id json = LTJSONDecode(jsonData, &error);
-    if (!error && [json isKindOfClass:[NSDictionary class]]) {
+    id json = [self decodeJSON:jsonData];
+    if (json && [json isKindOfClass:[NSDictionary class]]) {
         NSArray *results = [json objectForKey:@"results"];
         if (results && [results isKindOfClass:[NSArray class]] && [results count] > 0) {
             NSDictionary *versionDetail = [results[0] copy];

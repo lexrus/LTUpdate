@@ -95,7 +95,7 @@ static NSString *LTI18N(NSString *key) {
 }
 
 
-@interface LTUpdateVersionDetails : NSObject
+@interface LTUpdateVersionDetails : NSObject<NSCopying>
 
 @property(nonatomic, strong) NSString *version;
 @property(nonatomic, strong) NSString *releaseNotes;
@@ -130,7 +130,7 @@ typedef void(^LTUpdateCallback)(BOOL isNewVersionAvailable, LTUpdateVersionDetai
 
 @property(nonatomic, strong) LTUpdateVersionDetails *latestVersion;
 @property(nonatomic, assign, readonly) long appStoreID;
-@property(nonatomic, assign) LTUpdateCallback completionBlock;
+@property(nonatomic, strong) LTUpdateCallback completionBlock;
 
 + (id)shared;
 
