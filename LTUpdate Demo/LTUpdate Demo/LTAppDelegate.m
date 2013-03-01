@@ -30,10 +30,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-//    [[LTUpdate shared] clearSkippedVersion];
+////    [[LTUpdate shared] updateAndPush:LTUpdateDaily];
+    
     [[LTUpdate shared] update:LTUpdateHourly
                      complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
 
+//*// [TIP] Remove the first slash to toggle block comments if you'd like to use MBAlertView.
                          if (isNewVersionAvailable) {
                              NSLog(@"New version %@ released on %@.", versionDetails.version, versionDetails.releaseDate);
                              NSLog(@"The app is about %@", humanReadableFileSize(versionDetails.fileSizeBytes));
@@ -42,24 +44,26 @@
                          } else {
                              NSLog(@"You App is up to date.");
                          }
-                         
-                         // If you'd like to use MBAlertView.
-                         
-//                         if (isNewVersionAvailable) {
-//                             NSString *text = [NSString stringWithFormat:@"%@\n\n%@", LTI18N(@"A new version is available!"), versionDetails.releaseNotes];
-//                             MBAlertView *alertView = [MBAlertView alertWithBody:text
-//                                            cancelTitle:LTI18N(@"Remind Me Later") cancelBlock:nil];
-//                             [alertView addButtonWithText:LTI18N(@"Update") type:MBAlertViewItemTypeDefault block:^{
-//                                 [[LTUpdate shared] openAppStore];
-//                             }];
-//                             alertView.bodyFont = [UIFont systemFontOfSize:11];
-//                             [alertView addToDisplayQueue];
-//                         } else {
-//                             NSLog(@"You App is up to date.");
-//                         }
-
-
+/*/
+                         if (isNewVersionAvailable) {
+                             NSString *text = [NSString stringWithFormat:@"%@\n\n%@", LTI18N(@"A new version is available!"), versionDetails.releaseNotes];
+                             MBAlertView *alertView = [MBAlertView alertWithBody:text
+                                            cancelTitle:LTI18N(@"Remind Me Later") cancelBlock:nil];
+                             [alertView addButtonWithText:LTI18N(@"Update") type:MBAlertViewItemTypeDefault block:^{
+                                 [[LTUpdate shared] openAppStore];
+                             }];
+                             alertView.bodyFont = [UIFont systemFontOfSize:11];
+                             [alertView addToDisplayQueue];
+                         } else {
+                             NSLog(@"You App is up to date.");
+                         }
+//*/
                      }];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+////    [[LTUpdate shared] reduceNotification:notification then:LTUpdateNotifyThenAlert];
 }
 
 @end

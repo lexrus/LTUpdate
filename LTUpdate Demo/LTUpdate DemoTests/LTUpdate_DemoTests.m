@@ -40,7 +40,7 @@
 - (void)testUpdateVersion {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 
-    [[LTUpdate shared] update:LTUpdateDaily
+    [[LTUpdate shared] update:LTUpdateHourly
                      complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
 
                          if (isNewVersionAvailable) {

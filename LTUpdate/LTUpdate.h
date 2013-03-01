@@ -112,6 +112,13 @@ typedef NS_ENUM(uint, LTUpdateOptions)
     LTUpdateSkip
 };
 
+typedef NS_ENUM(uint, LTUpdateNotifyActions)
+{
+    LTUpdateNotifyOpenAppStore,
+    LTUpdateNotifyThenAlert,
+    LTUpdateNotifyDoNothing
+};
+
 typedef NS_ENUM(uint, LTUpdatePeroid)
 {
     LTUpdateHourly,
@@ -122,10 +129,9 @@ typedef NS_ENUM(uint, LTUpdatePeroid)
 
 #ifndef LTUpdateBlocks
 #define LTUpdateBlocks
-
 typedef void(^LTUpdateCallback)(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails);
-
 #endif
+
 
 @interface LTUpdate : NSObject
 
@@ -136,18 +142,21 @@ typedef void(^LTUpdateCallback)(BOOL isNewVersionAvailable, LTUpdateVersionDetai
 + (id)shared;
 
 - (void)__attribute__((unused)) update;
-
 - (void)__attribute__((unused)) update:(LTUpdateCallback)callback;
-
 - (void)update:(LTUpdatePeroid)peroid complete:(LTUpdateCallback)callback;
 
 - (BOOL)isVersionSkipped:(NSString *)version;
-
 - (void)skipVersion:(NSString *)version;
-
 - (void)clearSkippedVersion;
 
 - (void)__attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions;
+
+- (void)__attribute__((unused)) updateAndPush;
+- (void)updateAndPush:(LTUpdatePeroid)peroid;
+- (void)__attribute__((unused)) pushLatestVersion;
+- (void)pushLatestVersion:(UILocalNotification*)localNotification;
+- (void)__attribute__((unused)) reduceNotification:(UILocalNotification*)notification;
+- (void)reduceNotification:(UILocalNotification*)notification then:(LTUpdateNotifyActions)action;
 
 - (void)openAppStore;
 

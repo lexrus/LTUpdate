@@ -136,16 +136,19 @@ static long _appStoreID;
         (peroid == LTUpdateDaily && timestamp - lastUpdateInterval < kDailyDuration) ||
         (peroid == LTUpdateWeekly && timestamp - lastUpdateInterval < kWeeklyDuration) ||
         (peroid == LTUpdateMonthly && timestamp - lastUpdateInterval < kMonthlyDuration)) {
-        self.completionBlock(NO, nil);
+        if (self.completionBlock)
+            self.completionBlock(NO, nil);
         return;
     }
 
     __weak __typeof (&*self) weakSelf = self;
     dispatch_async(get_update_queue(), ^{
         __strong __typeof (&*weakSelf) strongSelf = weakSelf;
-        if (!strongSelf.completionBlock) return;
 
         [strongSelf parseJSON:[strongSelf fetchJSON]];
+        
+        if (!strongSelf.completionBlock) return;
+        
         if ([strongSelf latestVersion]) {
             if (strongSelf.completionBlock) {
                 dispatch_sync(dispatch_get_main_queue(), ^{
@@ -244,6 +247,17 @@ static long _appStoreID;
     }
 }
 
+#pragma mark - Update message
+
+- (NSString*)updateMessage {
+    return [NSString stringWithFormat:
+            LTI18N(@"%@ %@ is now available. You have %@. Would you like to download(%@) it now?"),
+            kAppName(),
+            self.latestVersion.version,
+            kAppVersion(),
+            humanReadableFileSize(self.latestVersion.fileSizeBytes)];
+}
+
 #pragma mark - Update interval
 
 - (double)lastUpdateInterval {
@@ -285,7 +299,7 @@ static long _appStoreID;
 - (void)__attribute__((unused)) alertLatestVersion:(LTUpdateOptions)alertOptions {
     UIAlertView *alertView = [[UIAlertView alloc] init];
     [alertView setTitle:LTI18N(@"A new version is available!")];
-    [alertView setMessage:[NSString stringWithFormat:LTI18N(@"%@ %@ is now available. You have %@. Would you like to download(%@) it now?"), kAppName(), self.latestVersion.version, kAppVersion(), humanReadableFileSize(self.latestVersion.fileSizeBytes)]];
+    [alertView setMessage:[self updateMessage]];
 
     [alertView addButtonWithTitle:LTI18N(@"Update")];
 
@@ -312,6 +326,55 @@ static long _appStoreID;
     } else if ([[alertView buttonTitleAtIndex:buttonIndex]
             isEqualToString:LTI18N(@"Skip This Version")]) {
         [self skipVersion:[[self latestVersion] version]];
+    }
+}
+
+#pragma mark - Notification
+
+- (void)updateAndPush
+{
+    [self updateAndPush:LTUpdateDaily];
+}
+
+- (void)updateAndPush:(LTUpdatePeroid)peroid
+{
+    static dispatch_once_t observerToken;
+    dispatch_once(&observerToken, ^{
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(pushLatestVersion)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
+    });
+    [self update:peroid complete:nil];
+}
+
+- (void)__attribute__((unused)) pushLatestVersion
+{
+    [self pushLatestVersion:nil];
+}
+
+- (void)pushLatestVersion:(UILocalNotification *)notification
+{
+    if (!self.latestVersion) return;
+    if (!notification) {
+        notification = [[UILocalNotification alloc] init];
+        notification.timeZone = [NSTimeZone defaultTimeZone];
+        notification.fireDate = [[NSDate date] dateByAddingTimeInterval:1.5f];
+        notification.alertBody = [self updateMessage];
+        notification.alertAction = LTI18N(@"Update");
+    }
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+}
+
+- (void)reduceNotification:(UILocalNotification *)notification then:(LTUpdateNotifyActions)action
+{
+    if ([notification.alertAction isEqualToString:LTI18N(@"Update")]) {
+        [[UIApplication sharedApplication] cancelLocalNotification:notification];
+        if (action == LTUpdateNotifyOpenAppStore) {
+            [self openAppStore];
+        } else if (action == LTUpdateNotifyThenAlert) {
+            [self alertLatestVersion:LTUpdateSkip|LTUpdateOption];
+        }
     }
 }
 
