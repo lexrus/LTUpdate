@@ -1,5 +1,7 @@
 # LTUpdate
 LeT's Update to the new version available in the AppStore!
+
+
 ![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_Multilingual.jpg)
 
 ## Features
@@ -53,7 +55,9 @@ Users may be disturbed by UIAlertView while they supposed to use the app. Some o
 }
 ```
 While your app become inactived, it would send a notification to notify the user to update.
-![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_Notification.jpg)
+
+![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_Notification.png)
+
 If the user tap/swiped this notification, the action would be invoked. In this case, the app will show a alert to make confirm of update. Or it’s quite nifty to open AppStore directly with
 ```[[LTUpdate shared] reduceNotification:notification];```
 
