@@ -30,7 +30,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-////    [[LTUpdate shared] updateAndPush:LTUpdateDaily];
+//    [[LTUpdate shared] updateAndPush:LTUpdateDaily]; return;
     
     [[LTUpdate shared] update:LTUpdateHourly
                      complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
@@ -63,7 +63,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-////    [[LTUpdate shared] reduceNotification:notification then:LTUpdateNotifyThenAlert];
+//    [[LTUpdate shared] reduceNotification:notification then:LTUpdateNotifyThenAlert];
 }
 
 @end

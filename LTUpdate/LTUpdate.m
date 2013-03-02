@@ -366,6 +366,11 @@ static long _appStoreID;
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
+- (void)__attribute__((unused)) reduceNotification:(UILocalNotification*)notification
+{
+    [self reduceNotification:notification then:LTUpdateNotifyOpenAppStore];
+}
+
 - (void)reduceNotification:(UILocalNotification *)notification then:(LTUpdateNotifyActions)action
 {
     if ([notification.alertAction isEqualToString:LTI18N(@"Update")]) {

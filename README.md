@@ -3,6 +3,7 @@ LeT's Update to the new version available in the AppStore!
 ![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_Multilingual.jpg)
 
 ## Features
+* Local Notifications — from 0.0.2.
 * Customizable callback. You can prompt the new version with your favorite view class.
 * Multilingual. 25 languages included in version 0.0.1.
 * Update period control. Daily/Weekly/Monthly
@@ -24,18 +25,39 @@ It's compatible with both ARC and MRC. But MRC mode is not well tested yet.
 
 ### DnD or pod install
 - Download the zip file and unzip it. Drag & drop LTUpdate/LTUpdate folder to your project.
-Or install with [CocoaPods](https://github.com/CocoaPods/CocoaPods): ```pod 'LTUpdate', '~>0.0.1'```
+- But I prefer [CocoaPods](https://github.com/CocoaPods/CocoaPods): ```pod 'LTUpdate', '~>0.0.2'```
 
-- Add a NSNumber field to {{YourAppName}}-Info.plist with key “APP_STORE_ID” and your App ID as value:
+### Define the App ID
+- Add a NSNumber field to {{YourProjectName}}-Info.plist with key “APP_STORE_ID” and your App ID as value:
 ![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_APP_STORE_ID.png)
 
-- After that, add ```#import "LTUpdate.h"``` to AppDelegate.m.
+### Import the header
+- After that, add ```#import "LTUpdate.h"``` to AppDelegate.m or {{YourProjectName}}-Prefix.pch.
 
+### Prompt with UIAlertView
 - Invoke the update method in applicationDidBecomeActive: ```[[LTUpdate shared] update];```
 LTUpdate will check new verison from iTunes API. And prompt the user to update if there is a new version available.
 
-### Customize
+### Prompt with Notification
+Users may be disturbed by UIAlertView while they supposed to use the app. Some of them installed your app but never open it till the new version has been promoted. Notifications is a better choice. Here is the simple way:
 
+```
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [[LTUpdate shared] updateAndPush:LTUpdateDaily];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    [[LTUpdate shared] reduceNotification:notification then:LTUpdateNotifyThenAlert];
+}
+```
+While your app become inactived, it would send a notification to notify the user to update.
+![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_Notification.jpg)
+If the user tap/swiped this notification, the action would be invoked. In this case, the app will show a alert to make confirm of update. Or it’s quite nifty to open AppStore directly with
+```[[LTUpdate shared] reduceNotification:notification];```
+
+### Customize
 If you need more control:
 
 ```
