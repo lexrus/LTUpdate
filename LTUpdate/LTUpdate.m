@@ -173,8 +173,6 @@ static long _appStoreID;
                                          timeoutInterval:30];
     NSError *error = nil;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:&error];
-    [urlString release];
-    urlString = nil;
     if (!error) {
         [self setLastUpdateInterval];
         return responseData;
@@ -183,7 +181,7 @@ static long _appStoreID;
 }
 
 - (id)decodeJSON:(NSData *)data {
-    
+    if (!data) return nil;
     id _targetClass = data;
     SEL _targetSelector = NSSelectorFromString(@"objectFromJSONDataWithParseOptions:error");
     BOOL hasJSONKit = YES;
