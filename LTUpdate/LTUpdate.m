@@ -362,6 +362,9 @@ static long _appStoreID;
         notification.alertAction = LTI18N(@"Update");
     }
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
 }
 
 - (void)__attribute__((unused)) reduceNotification:(UILocalNotification*)notification
