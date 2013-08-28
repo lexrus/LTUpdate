@@ -1,6 +1,7 @@
 # LTUpdate
 LeT's Update to the new version available in the AppStore!
 
+[使用方法-简体中文](https://github.com/lexrus/LTUpdate/wiki/LTUpdate-使用方法)
 
 ![Screenshot](https://raw.github.com/lexrus/LTUpdate/master/LTUpdate%20Demo/Screenshot_Multilingual.jpg)
 
