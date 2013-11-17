@@ -137,3 +137,7 @@ git submodule update
 
 ## License
 This code is distributed under the terms and conditions of the MIT license. See LTUpdate.h for details.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lexrus/ltupdate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
