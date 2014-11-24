@@ -52,47 +52,13 @@ __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0)
 #endif
 
 
-static NSString *kAppVersion() {
-    static NSString *appVersion;
-    static dispatch_once_t versionToken;
-    dispatch_once(&versionToken, ^{
-        appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    });
-    return appVersion;
-}
+extern NSString *kAppVersion();
 
-static NSString *kAppName() {
-    static NSString *appName;
-    static dispatch_once_t nameToken;
-    dispatch_once(&nameToken, ^{
-        appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-    });
-    return appName;
-}
+extern NSString *kAppName();
 
-static NSString *humanReadableFileSize(unsigned long long int size) {
-    NSString *sizeTypeW = @"bytes";
-    float working = 0;
+extern NSString *humanReadableFileSize(unsigned long long int size);
 
-    if (size < 1) {
-        return @"0KB";
-    } else {
-        if (size > 1024) {
-            working = size / 1024.;
-            sizeTypeW = @"KB";
-        }
-        if (working > 1024) {
-            working = working / 1024.;
-            sizeTypeW = @"MB";
-        }
-    }
-    return [NSString stringWithFormat:@"%.2f%@", working, sizeTypeW];
-}
-
-static NSString *LTI18N(NSString *key) {
-    NSString *localizedString = NSLocalizedStringFromTable(key, @"LTUpdate", nil);
-    return localizedString ? localizedString : @"";
-}
+extern NSString *LTI18N(NSString *key);
 
 
 @interface LTUpdateVersionDetails : NSObject<NSCopying>
